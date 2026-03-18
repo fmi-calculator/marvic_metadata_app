@@ -111,6 +111,9 @@ python -m streamlit run opc_dashboard/app.py
 
 Required packages: `streamlit`, `jsonschema`, `pandas`. Install them with whichever tool your environment uses (e.g. `pip install streamlit jsonschema pandas` or via a `requirements.txt` / `pyproject.toml`).
 
+> [!WARNING]
+> Add a `.gitignore` and do not commit real OPC records or generated CSVs under `data/opc_records/` or `data/exports/`. The files currently checked in are illustrative examples only.
+
 ---
 
 ### Adding a new field to an existing section
