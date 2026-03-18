@@ -1,0 +1,3 @@
+opc_id,opc_name,initial_conditions_propagated,initial_conditions_method,drivers_propagated,drivers_method,parameters_propagated,parameters_method,management_propagated,management_method,process_error_propagated,process_error_method,random_effects_propagated,random_effects_method,project_scale
+aceo_just_a_test,ACEO,True,Monte Carlo,False,,True,Monte Carlo,False,,False,,False,,True
+fi_test_test_test,CARBS,True,Monte Carlo,False,,False,,False,,False,,False,,False

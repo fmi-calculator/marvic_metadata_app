@@ -1,0 +1,136 @@
+{
+  "record_metadata": {
+    "schema_version": "1.0.0",
+    "opc_id": "fi_test_test_test",
+    "created_by": "Istem Fer",
+    "last_updated": "2026-03-18",
+    "notes": ""
+  },
+  "factsheet": {
+    "opc_name": "CARBS",
+    "lead_institutions": [
+      "Finnish Meteorological Institute",
+      "University of Helsinki"
+    ],
+    "main_modelling_approach": "hybrid",
+    "target_lusts": [
+      "Arable",
+      "Grassland"
+    ],
+    "geographic_focus": [
+      "Finland",
+      "Europe",
+      "Global"
+    ],
+    "ghgs_covered": [
+      "SOC"
+    ],
+    "reporting_scale": [
+      "farm",
+      "project"
+    ],
+    "update_frequency": "subannual",
+    "user_orientation": [
+      "certification",
+      "farmer",
+      "research"
+    ],
+    "operational_maturity": "04_operational",
+    "openness_level": "partly_open",
+    "validation_status": "under_validation",
+    "validation_status_notes": "No notes.",
+    "opc_fullname": "Carbon and stuff",
+    "cf_practices_covered": [
+      "Crop rotation",
+      "Cover crops"
+    ]
+  },
+  "models": [
+    {
+      "model_name": "Yasso",
+      "model_role": "soil",
+      "model_version": "",
+      "model_repository": "",
+      "scientific_publication_dois": [],
+      "notes": ""
+    }
+  ],
+  "uncertainty_propagation": {
+    "initial_conditions": {
+      "propagated": true,
+      "propagation_method": "Monte Carlo"
+    },
+    "drivers": {
+      "propagated": false,
+      "propagation_method": ""
+    },
+    "parameters": {
+      "propagated": false,
+      "propagation_method": ""
+    },
+    "management": {
+      "propagated": false,
+      "propagation_method": ""
+    },
+    "process_error": {
+      "propagated": false,
+      "propagation_method": ""
+    },
+    "random_effects": {
+      "propagated": false,
+      "propagation_method": ""
+    },
+    "project_scale": false
+  },
+  "validation_evidence_overview": [
+    {
+      "variable_validated": "SOC",
+      "dataset_type": "national statistics",
+      "geography": "Finland",
+      "period": "post-2018",
+      "validation_metrics": [
+        "RMSE",
+        "bias"
+      ],
+      "summary_result": "",
+      "remaining_gap": ""
+    }
+  ],
+  "crcf_model_readiness_matrix": {
+    "assessment_unit": "model_component",
+    "applies_to_model_name": "Yasso",
+    "eligibility_pathway": {
+      "national_inventory_model": true,
+      "commission_compliant_model": false
+    },
+    "model_compliance_criteria": {
+      "transparency_traceability": {
+        "status": "unclear",
+        "short_justification": "",
+        "priority_for_improvement": "medium",
+        "evidence_notes": ""
+      },
+      "scientific_credibility": {
+        "status": "unclear",
+        "short_justification": "",
+        "priority_for_improvement": "medium",
+        "evidence_notes": ""
+      },
+      "suitability": {
+        "status": "unclear",
+        "short_justification": "",
+        "priority_for_improvement": "medium",
+        "evidence_notes": ""
+      },
+      "minimum_accuracy": {
+        "status": "unclear",
+        "short_justification": "",
+        "priority_for_improvement": "medium",
+        "evidence_notes": "",
+        "bias": false,
+        "pi": false,
+        "r2": false
+      }
+    }
+  }
+}

@@ -1,0 +1,154 @@
+{
+  "record_metadata": {
+    "schema_version": "1.0.0",
+    "opc_id": "aceo_just_a_test",
+    "created_by": "Istem Fer",
+    "last_updated": "2026-03-18",
+    "notes": ""
+  },
+  "factsheet": {
+    "opc_name": "ACEO",
+    "lead_institutions": [
+      "INRAE"
+    ],
+    "main_modelling_approach": "hybrid",
+    "target_lusts": [
+      "Arable",
+      "Grassland"
+    ],
+    "geographic_focus": [
+      "France",
+      "Europe"
+    ],
+    "ghgs_covered": [
+      "SOC"
+    ],
+    "reporting_scale": [
+      "farm",
+      "project",
+      "pixel"
+    ],
+    "update_frequency": "monthly",
+    "user_orientation": [
+      "certification",
+      "farmer",
+      "research"
+    ],
+    "operational_maturity": "04_operational",
+    "openness_level": "fully_open",
+    "validation_status": "partly_validated",
+    "validation_status_notes": "No notes.",
+    "opc_fullname": "AgriCarbon-EO",
+    "cf_practices_covered": [
+      "Crop rotation",
+      "Cover crops",
+      "Residue management",
+      "Organic amendments"
+    ]
+  },
+  "models": [
+    {
+      "model_name": "PROSAIL",
+      "model_role": "upstream",
+      "model_version": "",
+      "model_repository": "",
+      "scientific_publication_dois": [],
+      "notes": "radiative transfer model"
+    },
+    {
+      "model_name": "SAFYE-CO2",
+      "model_role": "plant",
+      "model_version": "",
+      "model_repository": "",
+      "scientific_publication_dois": [],
+      "notes": ""
+    }
+  ],
+  "uncertainty_propagation": {
+    "initial_conditions": {
+      "propagated": true,
+      "propagation_method": "Monte Carlo"
+    },
+    "drivers": {
+      "propagated": false,
+      "propagation_method": ""
+    },
+    "parameters": {
+      "propagated": true,
+      "propagation_method": "Monte Carlo"
+    },
+    "management": {
+      "propagated": false,
+      "propagation_method": ""
+    },
+    "process_error": {
+      "propagated": false,
+      "propagation_method": ""
+    },
+    "random_effects": {
+      "propagated": false,
+      "propagation_method": ""
+    },
+    "project_scale": true
+  },
+  "validation_evidence_overview": [
+    {
+      "variable_validated": "NECB",
+      "dataset_type": "EC tower",
+      "geography": "FR-Aur",
+      "period": "2016-2019",
+      "validation_metrics": [
+        "R2",
+        "RMSE"
+      ],
+      "summary_result": "",
+      "remaining_gap": ""
+    }
+  ],
+  "crcf_model_readiness_matrix": {
+    "assessment_unit": "OPC",
+    "applies_to_model_name": "",
+    "eligibility_pathway": {
+      "national_inventory_model": false,
+      "commission_compliant_model": true
+    },
+    "model_compliance_criteria": {
+      "transparency_traceability": {
+        "status": "partly_met",
+        "short_justification": "",
+        "priority_for_improvement": "medium",
+        "evidence_notes": "",
+        "bias": false,
+        "pi": false,
+        "r2": false
+      },
+      "scientific_credibility": {
+        "status": "partly_met",
+        "short_justification": "",
+        "priority_for_improvement": "high",
+        "evidence_notes": "",
+        "bias": false,
+        "pi": false,
+        "r2": false
+      },
+      "suitability": {
+        "status": "partly_met",
+        "short_justification": "",
+        "priority_for_improvement": "medium",
+        "evidence_notes": "",
+        "bias": false,
+        "pi": false,
+        "r2": false
+      },
+      "minimum_accuracy": {
+        "status": "partly_met",
+        "short_justification": "",
+        "priority_for_improvement": "critical",
+        "evidence_notes": "",
+        "bias": false,
+        "pi": false,
+        "r2": false
+      }
+    }
+  }
+}

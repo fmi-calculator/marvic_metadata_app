@@ -1,0 +1,381 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/opc-master-record.schema.json",
+  "title": "OPC Master Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "record_metadata",
+    "factsheet",
+    "models",
+    "uncertainty_propagation",
+    "validation_evidence_overview",
+    "crcf_model_readiness_matrix"
+  ],
+  "$defs": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scaleEnum": {
+      "type": "string",
+      "enum": [
+        "pixel",
+        "point",
+        "parcel",
+        "field",
+        "farm",
+        "project",
+        "region",
+        "other"
+      ]
+    },
+    "uncertaintySource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["propagated", "propagation_method"],
+      "properties": {
+        "propagated": {
+          "type": "boolean"
+        },
+        "propagation_method": {
+          "type": "string"
+        }
+      }
+    },
+    "crcfCriterionDetail": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["met", "partly_met", "not_met", "not_applicable", "unclear"]
+        },
+        "short_justification": { "type": "string" },
+        "priority_for_improvement": {
+          "type": "string",
+          "enum": ["low", "medium", "high", "critical"]
+        },
+        "evidence_notes": { "type": "string" },
+        "bias": { "type": "boolean" },
+        "pi": { "type": "boolean" },
+        "r2": { "type": "boolean" }
+      }
+    }
+  },
+  "properties": {
+    "record_metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "opc_id", "created_by", "last_updated"],
+      "properties": {
+        "schema_version": {
+          "type": "string",
+          "examples": ["1.0.0"]
+        },
+        "opc_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9_\\-]+$",
+          "examples": ["carbs", "carbonextract", "daycent_cr"]
+        },
+        "created_by": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "last_updated": {
+          "type": "string",
+          "format": "date"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "factsheet": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "opc_name",
+        "lead_institutions",
+        "main_modelling_approach",
+        "target_lusts",
+        "geographic_focus",
+        "ghgs_covered",
+        "reporting_scale",
+        "update_frequency",
+        "user_orientation",
+        "operational_maturity",
+        "openness_level",
+        "validation_status"
+      ],
+      "properties": {
+        "opc_name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "opc_fullname": {
+          "type": "string"
+        },
+        "lead_institutions": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/nonEmptyString"
+          }
+        },
+        "main_modelling_approach": {
+          "type": "string",
+          "enum": ["soil-centred", "ecosystem-based", "hybrid", "multi-model"]
+        },
+        "target_lusts": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/nonEmptyString"
+          }
+        },
+        "geographic_focus": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/nonEmptyString"
+          }
+        },
+        "ghgs_covered": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": ["SOC", "CO2", "N2O", "CH4", "RECO", "GPP", "NECB", "other"]
+          }
+        },
+        "cf_practices_covered": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "Crop rotation",
+              "Cover crops",
+              "Organic amendments",
+              "Reduced tillage",
+              "Residue management"
+            ]
+          }
+        },
+        "reporting_scale": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/scaleEnum"
+          }
+        },
+        "update_frequency": {
+          "type": "string",
+          "enum": [
+            "subdaily",
+            "daily",
+            "monthly",
+            "subannual",
+            "annual",
+            "multi-annual",
+            "event-based",
+            "on-demand",
+            "other"
+          ]
+        },
+        "user_orientation": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "research",
+              "operational_MRV",
+              "certification",
+              "advisory",
+              "registry",
+              "auditor",
+              "farmer",
+              "mixed",
+              "other"
+            ]
+          }
+        },
+        "operational_maturity": {
+          "type": "string",
+          "enum": [
+            "01_concept",
+            "02_prototype",
+            "03_pilot",
+            "04_operational",
+            "05_other"
+          ]
+        },
+        "openness_level": {
+          "type": "string",
+          "enum": ["fully_open", "partly_open", "closed", "mixed"]
+        },
+        "validation_status": {
+          "type": "string",
+          "enum": [
+            "not_validated",
+            "validation_planned",
+            "under_validation",
+            "partly_validated",
+            "validated_limited_domain",
+            "validated_operational_domain",
+            "independently_validated"
+          ]
+        },
+        "validation_status_notes": {
+          "type": "string"
+        }
+      }
+    },
+    "models": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["model_name", "model_role", "scientific_publication_dois"],
+        "properties": {
+          "model_name": {
+            "$ref": "#/$defs/nonEmptyString"
+          },
+          "model_role": {
+            "type": "string",
+            "enum": [
+              "core",
+              "upstream",
+              "plant",
+              "soil",
+              "ecosystem",
+              "downstream",
+              "assimilation",
+              "auxiliary",
+              "other"
+            ]
+          },
+          "model_version": {
+            "type": "string"
+          },
+          "model_repository": {
+            "type": "string",
+            "format": "uri"
+          },
+          "scientific_publication_dois": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/nonEmptyString"
+            },
+            "uniqueItems": true
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "uncertainty_propagation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "initial_conditions",
+        "drivers",
+        "parameters",
+        "management",
+        "process_error",
+        "random_effects",
+        "project_scale"
+      ],
+      "properties": {
+        "initial_conditions": { "$ref": "#/$defs/uncertaintySource" },
+        "drivers": { "$ref": "#/$defs/uncertaintySource" },
+        "parameters": { "$ref": "#/$defs/uncertaintySource" },
+        "management": { "$ref": "#/$defs/uncertaintySource" },
+        "process_error": { "$ref": "#/$defs/uncertaintySource" },
+        "random_effects": { "$ref": "#/$defs/uncertaintySource" },
+        "project_scale": { "type": "boolean" }
+      }
+    },
+    "validation_evidence_overview": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "variable_validated",
+          "dataset_type",
+          "geography",
+          "period",
+          "validation_metrics",
+          "summary_result",
+          "remaining_gap"
+        ],
+        "properties": {
+          "variable_validated": {
+            "$ref": "#/$defs/nonEmptyString"
+          },
+          "dataset_type": {
+            "$ref": "#/$defs/nonEmptyString"
+          },
+          "geography": {
+            "$ref": "#/$defs/nonEmptyString"
+          },
+          "period": {
+            "$ref": "#/$defs/nonEmptyString"
+          },
+          "validation_metrics": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/$defs/nonEmptyString"
+            }
+          },
+          "summary_result": {
+            "type": "string"
+          },
+          "remaining_gap": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "crcf_model_readiness_matrix": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "assessment_unit": {
+          "type": "string",
+          "enum": ["OPC", "model_component"]
+        },
+        "applies_to_model_name": { "type": "string" },
+        "eligibility_pathway": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "national_inventory_model": { "type": "boolean" },
+            "commission_compliant_model": { "type": "boolean" }
+          }
+        },
+        "model_compliance_criteria": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "transparency_traceability": {
+              "$ref": "#/$defs/crcfCriterionDetail"
+            },
+            "scientific_credibility": { "$ref": "#/$defs/crcfCriterionDetail" },
+            "suitability": { "$ref": "#/$defs/crcfCriterionDetail" },
+            "minimum_accuracy": { "$ref": "#/$defs/crcfCriterionDetail" }
+          }
+        }
+      }
+    }
+  }
+}

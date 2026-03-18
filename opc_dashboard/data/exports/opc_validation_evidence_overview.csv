@@ -1,0 +1,3 @@
+opc_id,opc_name,row_index,variable_validated,dataset_type,geography,period,validation_metrics,summary_result,remaining_gap
+aceo_just_a_test,ACEO,0,NECB,EC tower,FR-Aur,2016-2019,R2;RMSE,,
+fi_test_test_test,CARBS,0,SOC,national statistics,Finland,post-2018,RMSE;bias,,

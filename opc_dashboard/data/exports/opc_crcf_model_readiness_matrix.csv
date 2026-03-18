@@ -1,0 +1,9 @@
+opc_id,opc_name,assessment_unit,applies_to_model_name,eligibility_national_inventory_model,eligibility_commission_compliant_model,criterion_code,criterion_label,status,short_justification,priority_for_improvement,evidence_notes,min_accuracy_bias_lte_pmu,min_accuracy_pi_90pct,min_accuracy_r2_gt_0
+aceo_just_a_test,ACEO,OPC,,False,True,transparency_traceability,Transparency and traceability,partly_met,,medium,,,,
+aceo_just_a_test,ACEO,OPC,,False,True,scientific_credibility,Scientific credibility,partly_met,,high,,,,
+aceo_just_a_test,ACEO,OPC,,False,True,suitability,Suitability,partly_met,,medium,,,,
+aceo_just_a_test,ACEO,OPC,,False,True,minimum_accuracy,Minimum accuracy,partly_met,,critical,,False,False,False
+fi_test_test_test,CARBS,model_component,Yasso,True,False,transparency_traceability,Transparency and traceability,unclear,,medium,,,,
+fi_test_test_test,CARBS,model_component,Yasso,True,False,scientific_credibility,Scientific credibility,unclear,,medium,,,,
+fi_test_test_test,CARBS,model_component,Yasso,True,False,suitability,Suitability,unclear,,medium,,,,
+fi_test_test_test,CARBS,model_component,Yasso,True,False,minimum_accuracy,Minimum accuracy,unclear,,medium,,False,False,False

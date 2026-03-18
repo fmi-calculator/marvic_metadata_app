@@ -1,0 +1,4 @@
+opc_id,opc_name,row_index,model_name,model_role,model_version,model_repository,scientific_publication_dois,model_notes
+aceo_just_a_test,ACEO,0,PROSAIL,upstream,,,,radiative transfer model
+aceo_just_a_test,ACEO,1,SAFYE-CO2,plant,,,,
+fi_test_test_test,CARBS,0,Yasso,soil,,,,
