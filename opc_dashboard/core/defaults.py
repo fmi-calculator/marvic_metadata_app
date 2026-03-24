@@ -107,6 +107,11 @@ def new_opc_record(opc_id: str, created_by: str, notes: str = "") -> dict:
                 "requires_weather_data": False,
                 "most_critical_bottleneck": "",
             },
+            "baseline_approach": {
+                "baseline_type": "",
+                "baseline_history_required": False,
+                "baseline_auditability": "",
+            },
         },
         "models": [],
         "uncertainty_propagation": {

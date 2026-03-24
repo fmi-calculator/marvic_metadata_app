@@ -36,6 +36,55 @@ def flatten_factsheet(record: dict) -> dict:
         "openness_level": fs.get("openness_level", ""),
         "validation_status": fs.get("validation_status", ""),
         "validation_status_notes": fs.get("validation_status_notes", ""),
+        "baseline_type": fs.get("baseline_approach", {}).get("baseline_type", ""),
+        "baseline_history_required": fs.get("baseline_approach", {}).get(
+            "baseline_history_required", ""
+        ),
+        "baseline_auditability": fs.get("baseline_approach", {}).get(
+            "baseline_auditability", ""
+        ),
+        "requires_field_management_data": fs.get("input_dependency_profile", {}).get(
+            "requires_field_management_data", ""
+        ),
+        "requires_soil_sampling": fs.get("input_dependency_profile", {}).get(
+            "requires_soil_sampling", ""
+        ),
+        "requires_lab_analysis": fs.get("input_dependency_profile", {}).get(
+            "requires_lab_analysis", ""
+        ),
+        "requires_optical_eo": fs.get("input_dependency_profile", {}).get(
+            "requires_optical_eo", ""
+        ),
+        "requires_sar_eo": fs.get("input_dependency_profile", {}).get(
+            "requires_sar_eo", ""
+        ),
+        "requires_weather_data": fs.get("input_dependency_profile", {}).get(
+            "requires_weather_data", ""
+        ),
+        "most_critical_bottleneck": fs.get("input_dependency_profile", {}).get(
+            "most_critical_bottleneck", ""
+        ),
+        "input_interfaces": _join(
+            fs.get("interoperability", {}).get("input_interfaces", [])
+        ),
+        "output_formats": _join(
+            fs.get("interoperability", {}).get("output_formats", [])
+        ),
+        "integrates_with_fmis": fs.get("interoperability", {}).get(
+            "integrates_with_fmis", ""
+        ),
+        "integrates_with_lpis": fs.get("interoperability", {}).get(
+            "integrates_with_lpis", ""
+        ),
+        "integrates_with_lab_data": fs.get("interoperability", {}).get(
+            "integrates_with_lab_data", ""
+        ),
+        "integrates_with_eo_pipeline": fs.get("interoperability", {}).get(
+            "integrates_with_eo_pipeline", ""
+        ),
+        "machine_readable_io_schema": fs.get("interoperability", {}).get(
+            "machine_readable_io_schema", ""
+        ),
         "execution_targets": _join(
             fs.get("runtime_environment", {}).get("execution_targets", [])
         ),
@@ -59,48 +108,6 @@ def flatten_factsheet(record: dict) -> dict:
         "auto_qa_qc": fs.get("automation_profile", {}).get("qa_qc", ""),
         "auto_report_generation": fs.get("automation_profile", {}).get(
             "report_generation", ""
-        ),
-        "input_interfaces": _join(
-            fs.get("interoperability", {}).get("input_interfaces", [])
-        ),
-        "output_formats": _join(
-            fs.get("interoperability", {}).get("output_formats", [])
-        ),
-        "integrates_with_fmis": fs.get("interoperability", {}).get(
-            "integrates_with_fmis", ""
-        ),
-        "integrates_with_lpis": fs.get("interoperability", {}).get(
-            "integrates_with_lpis", ""
-        ),
-        "integrates_with_lab_data": fs.get("interoperability", {}).get(
-            "integrates_with_lab_data", ""
-        ),
-        "integrates_with_eo_pipeline": fs.get("interoperability", {}).get(
-            "integrates_with_eo_pipeline", ""
-        ),
-        "machine_readable_io_schema": fs.get("interoperability", {}).get(
-            "machine_readable_io_schema", ""
-        ),
-        "requires_field_management_data": fs.get("input_dependency_profile", {}).get(
-            "requires_field_management_data", ""
-        ),
-        "requires_soil_sampling": fs.get("input_dependency_profile", {}).get(
-            "requires_soil_sampling", ""
-        ),
-        "requires_lab_analysis": fs.get("input_dependency_profile", {}).get(
-            "requires_lab_analysis", ""
-        ),
-        "requires_optical_eo": fs.get("input_dependency_profile", {}).get(
-            "requires_optical_eo", ""
-        ),
-        "requires_sar_eo": fs.get("input_dependency_profile", {}).get(
-            "requires_sar_eo", ""
-        ),
-        "requires_weather_data": fs.get("input_dependency_profile", {}).get(
-            "requires_weather_data", ""
-        ),
-        "most_critical_bottleneck": fs.get("input_dependency_profile", {}).get(
-            "most_critical_bottleneck", ""
         ),
         "schema_version": meta.get("schema_version", ""),
         "last_updated": meta.get("last_updated", ""),

@@ -8,6 +8,7 @@
   },
   "factsheet": {
     "opc_name": "ACEO",
+    "opc_fullname": "AgriCarbon-EO",
     "lead_institutions": [
       "INRAE"
     ],
@@ -22,6 +23,16 @@
     ],
     "ghgs_covered": [
       "SOC"
+    ],
+    "crop_types_supported": [
+      "cereals",
+      "maize"
+    ],
+    "cf_practices_covered": [
+      "Crop rotation",
+      "Cover crops",
+      "Residue management",
+      "Organic amendments"
     ],
     "reporting_scale": [
       "farm",
@@ -38,17 +49,35 @@
     "openness_level": "fully_open",
     "validation_status": "partly_validated",
     "validation_status_notes": "No notes.",
-    "opc_fullname": "AgriCarbon-EO",
-    "cf_practices_covered": [
-      "Crop rotation",
-      "Cover crops",
-      "Residue management",
-      "Organic amendments"
-    ],
-    "crop_types_supported": [
-      "cereals",
-      "maize"
-    ],
+    "baseline_approach": {
+      "baseline_type": "activity_specific",
+      "baseline_history_required": true,
+      "baseline_auditability": "medium"
+    },
+    "input_dependency_profile": {
+      "requires_field_management_data": true,
+      "requires_soil_sampling": false,
+      "requires_lab_analysis": false,
+      "requires_optical_eo": true,
+      "requires_sar_eo": false,
+      "requires_weather_data": true,
+      "most_critical_bottleneck": "management_data"
+    },
+    "interoperability": {
+      "input_interfaces": [
+        "manual_form",
+        "database"
+      ],
+      "output_formats": [
+        "netcdf",
+        "csv"
+      ],
+      "integrates_with_fmis": false,
+      "integrates_with_lpis": false,
+      "integrates_with_lab_data": false,
+      "integrates_with_eo_pipeline": true,
+      "machine_readable_io_schema": false
+    },
     "runtime_environment": {
       "execution_targets": [
         "hpc",
@@ -62,29 +91,11 @@
       "minimum_compute_notes": ""
     },
     "automation_profile": {
-      "data_ingestion": "",
-      "preprocessing": "",
-      "model_execution": "",
+      "data_ingestion": "semi_automated",
+      "preprocessing": "semi_automated",
+      "model_execution": "automated",
       "qa_qc": "",
       "report_generation": ""
-    },
-    "interoperability": {
-      "input_interfaces": [],
-      "output_formats": [],
-      "integrates_with_fmis": false,
-      "integrates_with_lpis": false,
-      "integrates_with_lab_data": false,
-      "integrates_with_eo_pipeline": false,
-      "machine_readable_io_schema": false
-    },
-    "input_dependency_profile": {
-      "requires_field_management_data": false,
-      "requires_soil_sampling": false,
-      "requires_lab_analysis": false,
-      "requires_optical_eo": false,
-      "requires_sar_eo": false,
-      "requires_weather_data": false,
-      "most_critical_bottleneck": ""
     }
   },
   "models": [

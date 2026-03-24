@@ -178,7 +178,8 @@
               "legumes",
               "grassland",
               "root vegetables",
-              "vegetables",
+              "leafy vegetables",
+              "vegetables - other",
               "shrubs",
               "trees",
               "mixed",
@@ -270,6 +271,96 @@
         "validation_status_notes": {
           "type": "string"
         },
+        "baseline_approach": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "baseline_type": {
+              "type": "string",
+              "enum": [
+                "farm_specific",
+                "activity_specific",
+                "regional_reference",
+                "standardised",
+                "dynamic_modelled",
+                "control_plot",
+                "mixed",
+                "unclear"
+              ]
+            },
+            "baseline_history_required": { "type": "boolean" },
+            "baseline_auditability": {
+              "type": "string",
+              "enum": ["high", "medium", "low", "unclear"]
+            }
+          }
+        },
+        "input_dependency_profile": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "requires_field_management_data": { "type": "boolean" },
+            "requires_soil_sampling": { "type": "boolean" },
+            "requires_lab_analysis": { "type": "boolean" },
+            "requires_optical_eo": { "type": "boolean" },
+            "requires_sar_eo": { "type": "boolean" },
+            "requires_weather_data": { "type": "boolean" },
+            "most_critical_bottleneck": {
+              "type": "string",
+              "enum": [
+                "management_data",
+                "soil_data",
+                "eo_availability",
+                "weather_data",
+                "crop_parameters",
+                "validation_data",
+                "compute",
+                "other"
+              ]
+            }
+          }
+        },
+        "interoperability": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "input_interfaces": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "api",
+                  "file_upload",
+                  "database",
+                  "manual_form",
+                  "other"
+                ]
+              }
+            },
+            "output_formats": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "json",
+                  "csv",
+                  "geotiff",
+                  "netcdf",
+                  "parquet",
+                  "pdf",
+                  "other"
+                ]
+              }
+            },
+            "integrates_with_fmis": { "type": "boolean" },
+            "integrates_with_lpis": { "type": "boolean" },
+            "integrates_with_lab_data": { "type": "boolean" },
+            "integrates_with_eo_pipeline": { "type": "boolean" },
+            "machine_readable_io_schema": { "type": "boolean" }
+          }
+        },
         "runtime_environment": {
           "type": "object",
           "additionalProperties": false,
@@ -318,72 +409,6 @@
             "report_generation": {
               "type": "string",
               "enum": ["manual", "semi_automated", "automated"]
-            }
-          }
-        },
-        "interoperability": {
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "input_interfaces": {
-              "type": "array",
-              "uniqueItems": true,
-              "items": {
-                "type": "string",
-                "enum": [
-                  "api",
-                  "file_upload",
-                  "database",
-                  "manual_form",
-                  "other"
-                ]
-              }
-            },
-            "output_formats": {
-              "type": "array",
-              "uniqueItems": true,
-              "items": {
-                "type": "string",
-                "enum": [
-                  "json",
-                  "csv",
-                  "geotiff",
-                  "netcdf",
-                  "parquet",
-                  "pdf",
-                  "other"
-                ]
-              }
-            },
-            "integrates_with_fmis": { "type": "boolean" },
-            "integrates_with_lpis": { "type": "boolean" },
-            "integrates_with_lab_data": { "type": "boolean" },
-            "integrates_with_eo_pipeline": { "type": "boolean" },
-            "machine_readable_io_schema": { "type": "boolean" }
-          }
-        },
-        "input_dependency_profile": {
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "requires_field_management_data": { "type": "boolean" },
-            "requires_soil_sampling": { "type": "boolean" },
-            "requires_lab_analysis": { "type": "boolean" },
-            "requires_optical_eo": { "type": "boolean" },
-            "requires_sar_eo": { "type": "boolean" },
-            "requires_weather_data": { "type": "boolean" },
-            "most_critical_bottleneck": {
-              "type": "string",
-              "enum": [
-                "management_data",
-                "soil_data",
-                "eo_availability",
-                "weather_data",
-                "crop_parameters",
-                "validation_data",
-                "compute",
-                "other"
-              ]
             }
           }
         }

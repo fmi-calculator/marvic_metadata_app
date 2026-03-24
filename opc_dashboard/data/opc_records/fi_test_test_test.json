@@ -8,42 +8,23 @@
   },
   "factsheet": {
     "opc_name": "CARBS",
+    "opc_fullname": "Carbon and stuff",
     "lead_institutions": [
       "Finnish Meteorological Institute",
       "University of Helsinki"
     ],
     "main_modelling_approach": "hybrid",
-    "target_lusts": [
-      "Arable",
-      "Grassland"
-    ],
-    "geographic_focus": [
-      "Finland",
-      "Europe",
-      "Global"
-    ],
-    "ghgs_covered": [
-      "SOC"
-    ],
-    "reporting_scale": [
-      "farm",
-      "project"
-    ],
+    "target_lusts": ["Arable", "Grassland"],
+    "geographic_focus": ["Finland", "Europe", "Global"],
+    "ghgs_covered": ["SOC"],
+    "cf_practices_covered": ["Crop rotation", "Cover crops"],
+    "reporting_scale": ["farm", "project"],
     "update_frequency": "subannual",
-    "user_orientation": [
-      "certification",
-      "farmer",
-      "research"
-    ],
+    "user_orientation": ["certification", "farmer", "research"],
     "operational_maturity": "04_operational",
     "openness_level": "partly_open",
     "validation_status": "under_validation",
-    "validation_status_notes": "No notes.",
-    "opc_fullname": "Carbon and stuff",
-    "cf_practices_covered": [
-      "Crop rotation",
-      "Cover crops"
-    ]
+    "validation_status_notes": "No notes."
   },
   "models": [
     {
@@ -88,10 +69,7 @@
       "dataset_type": "national statistics",
       "geography": "Finland",
       "period": "post-2018",
-      "validation_metrics": [
-        "RMSE",
-        "bias"
-      ],
+      "validation_metrics": ["RMSE", "bias"],
       "summary_result": "",
       "remaining_gap": ""
     }

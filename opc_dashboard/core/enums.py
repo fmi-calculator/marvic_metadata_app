@@ -37,6 +37,10 @@ OUTPUT_FORMAT_OPTIONS: list[str] = _io["output_formats"]["items"]["enum"]
 _idp = _f["input_dependency_profile"]["properties"]
 BOTTLENECK_OPTIONS: list[str] = _idp["most_critical_bottleneck"]["enum"]
 
+_ba = _f["baseline_approach"]["properties"]
+BASELINE_TYPE_OPTIONS: list[str] = _ba["baseline_type"]["enum"]
+BASELINE_AUDITABILITY_OPTIONS: list[str] = _ba["baseline_auditability"]["enum"]
+
 CRCF_STATUS_OPTIONS: list[str] = _c["status"]["enum"]
 CRCF_PRIORITY_OPTIONS: list[str] = _c["priority_for_improvement"]["enum"]
 

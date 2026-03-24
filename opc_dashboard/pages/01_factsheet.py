@@ -26,6 +26,8 @@ from core.enums import (
     INPUT_INTERFACE_OPTIONS,
     OUTPUT_FORMAT_OPTIONS,
     BOTTLENECK_OPTIONS,
+    BASELINE_TYPE_OPTIONS,
+    BASELINE_AUDITABILITY_OPTIONS,
 )
 
 _s.ensure_session_state()
@@ -170,6 +172,139 @@ with st.form("factsheet_form"):
         height=80,
     )
 
+    st.subheader("Baseline approach")
+    st.caption("Describe how the baseline is defined and how auditable it is.")
+    ba = fs.get("baseline_approach", {})
+
+    _BT_OPTS = [""] + BASELINE_TYPE_OPTIONS
+    baseline_type = st.selectbox(
+        "Baseline type (select best that applies)",
+        options=_BT_OPTS,
+        index=_BT_OPTS.index(ba.get("baseline_type", ""))
+        if ba.get("baseline_type", "") in _BT_OPTS
+        else 0,
+        help="How is the baseline defined for this OPC?",
+    )
+
+    baseline_history_yn = st.radio(
+        "Baseline history required?",
+        ["Yes", "No"],
+        index=0 if ba.get("baseline_history_required", False) else 1,
+        horizontal=True,
+        help="Does the OPC require historical land-use or management data to establish the baseline?",
+    )
+
+    _BAD_OPTS = [""] + BASELINE_AUDITABILITY_OPTIONS
+    baseline_auditability = st.selectbox(
+        "Baseline auditability",
+        options=_BAD_OPTS,
+        index=_BAD_OPTS.index(ba.get("baseline_auditability", ""))
+        if ba.get("baseline_auditability", "") in _BAD_OPTS
+        else 0,
+        help="How easily can an external auditor verify and reproduce the baseline calculation?",
+    )
+
+    st.subheader("Input dependency profile")
+    st.caption(
+        "Flag which input data types this OPC actually requires to run, "
+        "then identify the single most critical bottleneck that limits operational deployment."
+    )
+    idp = fs.get("input_dependency_profile", {})
+
+    col_d1, col_d2 = st.columns(2)
+    with col_d1:
+        req_field_mgmt = st.checkbox(
+            "Field management data",
+            value=idp.get("requires_field_management_data", False),
+            help="Tillage, fertilisation, irrigation, sowing/harvest dates, etc.",
+        )
+        req_soil_sampling = st.checkbox(
+            "Soil sampling",
+            value=idp.get("requires_soil_sampling", False),
+            help="On-site soil physical / chemical measurements (bulk density, texture, SOC, …).",
+        )
+        req_lab_analysis = st.checkbox(
+            "Lab analysis",
+            value=idp.get("requires_lab_analysis", False),
+            help="Laboratory analysis of soil or plant material (e.g. mineralisation assays).",
+        )
+    with col_d2:
+        req_optical_eo = st.checkbox(
+            "Optical EO",
+            value=idp.get("requires_optical_eo", False),
+            help="Optical satellite or aerial imagery (e.g. Sentinel-2, Landsat).",
+        )
+        req_sar_eo = st.checkbox(
+            "SAR EO",
+            value=idp.get("requires_sar_eo", False),
+            help="Synthetic Aperture Radar imagery (e.g. Sentinel-1).",
+        )
+        req_weather = st.checkbox(
+            "Weather data",
+            value=idp.get("requires_weather_data", False),
+            help="Meteorological time series (precipitation, temperature, radiation, …).",
+        )
+
+    _BOTTLENECK_OPTS = [""] + BOTTLENECK_OPTIONS
+    most_critical_bottleneck = st.selectbox(
+        "Most critical operational bottleneck",
+        options=_BOTTLENECK_OPTS,
+        index=_BOTTLENECK_OPTS.index(idp.get("most_critical_bottleneck", ""))
+        if idp.get("most_critical_bottleneck", "") in _BOTTLENECK_OPTS
+        else 0,
+        help="Which single input or resource is the hardest constraint for running this OPC at scale?",
+    )
+
+    st.subheader("Interoperability")
+    iop = fs.get("interoperability", {})
+
+    input_interfaces = st.multiselect(
+        "Input interfaces (select all that apply)",
+        options=INPUT_INTERFACE_OPTIONS,
+        default=[
+            v for v in iop.get("input_interfaces", []) if v in INPUT_INTERFACE_OPTIONS
+        ],
+        help="How does the OPC receive its input data?",
+    )
+    output_formats = st.multiselect(
+        "Output formats (select all that apply)",
+        options=OUTPUT_FORMAT_OPTIONS,
+        default=[
+            v for v in iop.get("output_formats", []) if v in OUTPUT_FORMAT_OPTIONS
+        ],
+        help="In what formats does the OPC deliver its results?",
+    )
+
+    st.markdown("*External system integrations*")
+    col_i1, col_i2 = st.columns(2)
+    with col_i1:
+        int_fmis = st.checkbox(
+            "Integrates with FMIS",
+            value=iop.get("integrates_with_fmis", False),
+            help="Farm Management Information System integration.",
+        )
+        int_lpis = st.checkbox(
+            "Integrates with LPIS",
+            value=iop.get("integrates_with_lpis", False),
+            help="Land Parcel Identification System integration.",
+        )
+        int_lab = st.checkbox(
+            "Integrates with lab data",
+            value=iop.get("integrates_with_lab_data", False),
+            help="Can ingest laboratory soil or plant sample data directly.",
+        )
+    with col_i2:
+        int_eo = st.checkbox(
+            "Integrates with EO pipeline",
+            value=iop.get("integrates_with_eo_pipeline", False),
+            help="Connects to an Earth Observation processing pipeline (e.g. Sentinel Hub, CDSE).",
+        )
+        int_schema = st.checkbox(
+            "Machine-readable I/O schema",
+            value=iop.get("machine_readable_io_schema", False),
+            help="Inputs and outputs are described by a formal, machine-readable schema (e.g. JSON Schema, OpenAPI).",
+        )
+
     st.subheader("Runtime & deployment")
     re = fs.get("runtime_environment", {})
 
@@ -268,107 +403,6 @@ with st.form("factsheet_form"):
         help="Producing the final certificate, report, or structured output delivered to the user.",
     )
 
-    st.subheader("Interoperability")
-    iop = fs.get("interoperability", {})
-
-    input_interfaces = st.multiselect(
-        "Input interfaces (select all that apply)",
-        options=INPUT_INTERFACE_OPTIONS,
-        default=[
-            v for v in iop.get("input_interfaces", []) if v in INPUT_INTERFACE_OPTIONS
-        ],
-        help="How does the OPC receive its input data?",
-    )
-    output_formats = st.multiselect(
-        "Output formats (select all that apply)",
-        options=OUTPUT_FORMAT_OPTIONS,
-        default=[
-            v for v in iop.get("output_formats", []) if v in OUTPUT_FORMAT_OPTIONS
-        ],
-        help="In what formats does the OPC deliver its results?",
-    )
-
-    st.markdown("*External system integrations*")
-    col_i1, col_i2 = st.columns(2)
-    with col_i1:
-        int_fmis = st.checkbox(
-            "Integrates with FMIS",
-            value=iop.get("integrates_with_fmis", False),
-            help="Farm Management Information System integration.",
-        )
-        int_lpis = st.checkbox(
-            "Integrates with LPIS",
-            value=iop.get("integrates_with_lpis", False),
-            help="Land Parcel Identification System integration.",
-        )
-        int_lab = st.checkbox(
-            "Integrates with lab data",
-            value=iop.get("integrates_with_lab_data", False),
-            help="Can ingest laboratory soil or plant sample data directly.",
-        )
-    with col_i2:
-        int_eo = st.checkbox(
-            "Integrates with EO pipeline",
-            value=iop.get("integrates_with_eo_pipeline", False),
-            help="Connects to an Earth Observation processing pipeline (e.g. Sentinel Hub, CDSE).",
-        )
-        int_schema = st.checkbox(
-            "Machine-readable I/O schema",
-            value=iop.get("machine_readable_io_schema", False),
-            help="Inputs and outputs are described by a formal, machine-readable schema (e.g. JSON Schema, OpenAPI).",
-        )
-
-    st.subheader("Input dependency profile")
-    st.caption(
-        "Flag which input data types this OPC actually requires to run, "
-        "then identify the single most critical bottleneck that limits operational deployment."
-    )
-    idp = fs.get("input_dependency_profile", {})
-
-    col_d1, col_d2 = st.columns(2)
-    with col_d1:
-        req_field_mgmt = st.checkbox(
-            "Field management data",
-            value=idp.get("requires_field_management_data", False),
-            help="Tillage, fertilisation, irrigation, sowing/harvest dates, etc.",
-        )
-        req_soil_sampling = st.checkbox(
-            "Soil sampling",
-            value=idp.get("requires_soil_sampling", False),
-            help="On-site soil physical / chemical measurements (bulk density, texture, SOC, …).",
-        )
-        req_lab_analysis = st.checkbox(
-            "Lab analysis",
-            value=idp.get("requires_lab_analysis", False),
-            help="Laboratory analysis of soil or plant material (e.g. mineralisation assays).",
-        )
-    with col_d2:
-        req_optical_eo = st.checkbox(
-            "Optical EO",
-            value=idp.get("requires_optical_eo", False),
-            help="Optical satellite or aerial imagery (e.g. Sentinel-2, Landsat).",
-        )
-        req_sar_eo = st.checkbox(
-            "SAR EO",
-            value=idp.get("requires_sar_eo", False),
-            help="Synthetic Aperture Radar imagery (e.g. Sentinel-1).",
-        )
-        req_weather = st.checkbox(
-            "Weather data",
-            value=idp.get("requires_weather_data", False),
-            help="Meteorological time series (precipitation, temperature, radiation, …).",
-        )
-
-    _BOTTLENECK_OPTS = [""] + BOTTLENECK_OPTIONS
-    most_critical_bottleneck = st.selectbox(
-        "Most critical operational bottleneck",
-        options=_BOTTLENECK_OPTS,
-        index=_BOTTLENECK_OPTS.index(idp.get("most_critical_bottleneck", ""))
-        if idp.get("most_critical_bottleneck", "") in _BOTTLENECK_OPTS
-        else 0,
-        help="Which single input or resource is the hardest constraint for running this OPC at scale?",
-    )
-
     submitted = st.form_submit_button("Save")
 
 # ── On save ───────────────────────────────────────────────────────────────────
@@ -394,6 +428,29 @@ if submitted:
             "openness_level": openness,
             "validation_status": val_status,
             "validation_status_notes": val_notes.strip(),
+            "baseline_approach": {
+                "baseline_type": baseline_type,
+                "baseline_history_required": baseline_history_yn == "Yes",
+                "baseline_auditability": baseline_auditability,
+            },
+            "input_dependency_profile": {
+                "requires_field_management_data": req_field_mgmt,
+                "requires_soil_sampling": req_soil_sampling,
+                "requires_lab_analysis": req_lab_analysis,
+                "requires_optical_eo": req_optical_eo,
+                "requires_sar_eo": req_sar_eo,
+                "requires_weather_data": req_weather,
+                "most_critical_bottleneck": most_critical_bottleneck,
+            },
+            "interoperability": {
+                "input_interfaces": input_interfaces,
+                "output_formats": output_formats,
+                "integrates_with_fmis": int_fmis,
+                "integrates_with_lpis": int_lpis,
+                "integrates_with_lab_data": int_lab,
+                "integrates_with_eo_pipeline": int_eo,
+                "machine_readable_io_schema": int_schema,
+            },
             "runtime_environment": {
                 "execution_targets": exec_targets,
                 "containerised": containerised_yn == "Yes",
@@ -407,24 +464,6 @@ if submitted:
                 "model_execution": auto_model_execution,
                 "qa_qc": auto_qa_qc,
                 "report_generation": auto_report_generation,
-            },
-            "interoperability": {
-                "input_interfaces": input_interfaces,
-                "output_formats": output_formats,
-                "integrates_with_fmis": int_fmis,
-                "integrates_with_lpis": int_lpis,
-                "integrates_with_lab_data": int_lab,
-                "integrates_with_eo_pipeline": int_eo,
-                "machine_readable_io_schema": int_schema,
-            },
-            "input_dependency_profile": {
-                "requires_field_management_data": req_field_mgmt,
-                "requires_soil_sampling": req_soil_sampling,
-                "requires_lab_analysis": req_lab_analysis,
-                "requires_optical_eo": req_optical_eo,
-                "requires_sar_eo": req_sar_eo,
-                "requires_weather_data": req_weather,
-                "most_critical_bottleneck": most_critical_bottleneck,
             },
         }
     )
