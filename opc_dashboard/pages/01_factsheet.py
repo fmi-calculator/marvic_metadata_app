@@ -21,6 +21,9 @@ from core.enums import (
     VALIDATION_STATUS_OPTIONS,
     EXECUTION_TARGET_OPTIONS,
     CONTAINER_TECH_OPTIONS,
+    AUTOMATION_LEVEL_OPTIONS,
+    INPUT_INTERFACE_OPTIONS,
+    OUTPUT_FORMAT_OPTIONS,
 )
 
 _s.ensure_session_state()
@@ -203,6 +206,103 @@ with st.form("factsheet_form"):
         help="Free-text description of the minimum or typical compute requirements.",
     )
 
+    st.subheader("Automation profile")
+    st.caption(
+        "For each pipeline stage, indicate the typical level of automation: "
+        "**manual** (human action required each run), "
+        "**semi_automated** (scripted but needs oversight or occasional intervention), "
+        "**automated** (runs end-to-end without human input)."
+    )
+    ap = fs.get("automation_profile", {})
+    _AUTO_OPTS = [""] + AUTOMATION_LEVEL_OPTIONS
+
+    auto_data_ingestion = st.selectbox(
+        "Data ingestion",
+        options=_AUTO_OPTS,
+        index=_AUTO_OPTS.index(ap.get("data_ingestion", ""))
+        if ap.get("data_ingestion", "") in _AUTO_OPTS
+        else 0,
+        help="Fetching / importing raw input data (observations, weather, farm records, EO).",
+    )
+    auto_preprocessing = st.selectbox(
+        "Pre-processing",
+        options=_AUTO_OPTS,
+        index=_AUTO_OPTS.index(ap.get("preprocessing", ""))
+        if ap.get("preprocessing", "") in _AUTO_OPTS
+        else 0,
+        help="Cleaning, formatting, and harmonising inputs before model execution.",
+    )
+    auto_model_execution = st.selectbox(
+        "Model execution",
+        options=_AUTO_OPTS,
+        index=_AUTO_OPTS.index(ap.get("model_execution", ""))
+        if ap.get("model_execution", "") in _AUTO_OPTS
+        else 0,
+        help="Running the core model(s).",
+    )
+    auto_qa_qc = st.selectbox(
+        "QA / QC",
+        options=_AUTO_OPTS,
+        index=_AUTO_OPTS.index(ap.get("qa_qc", ""))
+        if ap.get("qa_qc", "") in _AUTO_OPTS
+        else 0,
+        help="Quality assurance and quality control checks on model outputs.",
+    )
+    auto_report_generation = st.selectbox(
+        "Report generation",
+        options=_AUTO_OPTS,
+        index=_AUTO_OPTS.index(ap.get("report_generation", ""))
+        if ap.get("report_generation", "") in _AUTO_OPTS
+        else 0,
+        help="Producing the final certificate, report, or structured output delivered to the user.",
+    )
+
+    st.subheader("Interoperability")
+    iop = fs.get("interoperability", {})
+
+    input_interfaces = st.multiselect(
+        "Input interfaces (select all that apply)",
+        options=INPUT_INTERFACE_OPTIONS,
+        default=[v for v in iop.get("input_interfaces", []) if v in INPUT_INTERFACE_OPTIONS],
+        help="How does the OPC receive its input data?",
+    )
+    output_formats = st.multiselect(
+        "Output formats (select all that apply)",
+        options=OUTPUT_FORMAT_OPTIONS,
+        default=[v for v in iop.get("output_formats", []) if v in OUTPUT_FORMAT_OPTIONS],
+        help="In what formats does the OPC deliver its results?",
+    )
+
+    st.markdown("*External system integrations*")
+    col_i1, col_i2 = st.columns(2)
+    with col_i1:
+        int_fmis = st.checkbox(
+            "Integrates with FMIS",
+            value=iop.get("integrates_with_fmis", False),
+            help="Farm Management Information System integration.",
+        )
+        int_lpis = st.checkbox(
+            "Integrates with LPIS",
+            value=iop.get("integrates_with_lpis", False),
+            help="Land Parcel Identification System integration.",
+        )
+        int_lab = st.checkbox(
+            "Integrates with lab data",
+            value=iop.get("integrates_with_lab_data", False),
+            help="Can ingest laboratory soil or plant sample data directly.",
+        )
+    with col_i2:
+        int_eo = st.checkbox(
+            "Integrates with EO pipeline",
+            value=iop.get("integrates_with_eo_pipeline", False),
+            help="Connects to an Earth Observation processing pipeline (e.g. Sentinel Hub, CDSE).",
+        )
+        int_schema = st.checkbox(
+            "Machine-readable I/O schema",
+            value=iop.get("machine_readable_io_schema", False),
+            help="Inputs and outputs are described by a formal, machine-readable schema (e.g. JSON Schema, OpenAPI).",
+        )
+
     submitted = st.form_submit_button("Save")
 
 # ── On save ───────────────────────────────────────────────────────────────────
@@ -233,6 +333,22 @@ if submitted:
                 "container_tech": container_tech,
                 "requires_parallelisation": parallelised_yn == "Yes",
                 "minimum_compute_notes": min_compute_notes.strip(),
+            },
+            "automation_profile": {
+                "data_ingestion":    auto_data_ingestion,
+                "preprocessing":     auto_preprocessing,
+                "model_execution":   auto_model_execution,
+                "qa_qc":             auto_qa_qc,
+                "report_generation": auto_report_generation,
+            },
+            "interoperability": {
+                "input_interfaces":            input_interfaces,
+                "output_formats":              output_formats,
+                "integrates_with_fmis":        int_fmis,
+                "integrates_with_lpis":        int_lpis,
+                "integrates_with_lab_data":    int_lab,
+                "integrates_with_eo_pipeline": int_eo,
+                "machine_readable_io_schema":  int_schema,
             },
         }
     )

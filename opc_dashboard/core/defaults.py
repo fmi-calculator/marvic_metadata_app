@@ -76,6 +76,22 @@ def new_opc_record(opc_id: str, created_by: str, notes: str = "") -> dict:
                 "requires_parallelisation": False,
                 "minimum_compute_notes": "",
             },
+            "automation_profile": {
+                "data_ingestion": "",
+                "preprocessing": "",
+                "model_execution": "",
+                "qa_qc": "",
+                "report_generation": "",
+            },
+            "interoperability": {
+                "input_interfaces": [],
+                "output_formats": [],
+                "integrates_with_fmis": False,
+                "integrates_with_lpis": False,
+                "integrates_with_lab_data": False,
+                "integrates_with_eo_pipeline": False,
+                "machine_readable_io_schema": False,
+            },
         },
         "models": [],
         "uncertainty_propagation": {

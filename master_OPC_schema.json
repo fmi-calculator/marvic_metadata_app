@@ -273,6 +273,59 @@
             "requires_parallelisation": { "type": "boolean" },
             "minimum_compute_notes": { "type": "string" }
           }
+        },
+        "automation_profile": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "data_ingestion": {
+              "type": "string",
+              "enum": ["manual", "semi_automated", "automated"]
+            },
+            "preprocessing": {
+              "type": "string",
+              "enum": ["manual", "semi_automated", "automated"]
+            },
+            "model_execution": {
+              "type": "string",
+              "enum": ["manual", "semi_automated", "automated"]
+            },
+            "qa_qc": {
+              "type": "string",
+              "enum": ["manual", "semi_automated", "automated"]
+            },
+            "report_generation": {
+              "type": "string",
+              "enum": ["manual", "semi_automated", "automated"]
+            }
+          }
+        },
+        "interoperability": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "input_interfaces": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": ["api", "file_upload", "database", "manual_form", "other"]
+              }
+            },
+            "output_formats": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": ["json", "csv", "geotiff", "netcdf", "parquet", "pdf", "other"]
+              }
+            },
+            "integrates_with_fmis": { "type": "boolean" },
+            "integrates_with_lpis": { "type": "boolean" },
+            "integrates_with_lab_data": { "type": "boolean" },
+            "integrates_with_eo_pipeline": { "type": "boolean" },
+            "machine_readable_io_schema": { "type": "boolean" }
+          }
         }
       }
     },

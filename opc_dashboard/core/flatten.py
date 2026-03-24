@@ -48,6 +48,28 @@ def flatten_factsheet(record: dict) -> dict:
         "minimum_compute_notes": fs.get("runtime_environment", {}).get(
             "minimum_compute_notes", ""
         ),
+        "auto_data_ingestion": fs.get("automation_profile", {}).get(
+            "data_ingestion", ""
+        ),
+        "auto_preprocessing": fs.get("automation_profile", {}).get("preprocessing", ""),
+        "auto_model_execution": fs.get("automation_profile", {}).get(
+            "model_execution", ""
+        ),
+        "auto_qa_qc": fs.get("automation_profile", {}).get("qa_qc", ""),
+        "auto_report_generation": fs.get("automation_profile", {}).get(
+            "report_generation", ""
+        ),
+        "input_interfaces": _join(
+            fs.get("interoperability", {}).get("input_interfaces", [])
+        ),
+        "output_formats": _join(
+            fs.get("interoperability", {}).get("output_formats", [])
+        ),
+        "integrates_with_fmis": fs.get("interoperability", {}).get("integrates_with_fmis", ""),
+        "integrates_with_lpis": fs.get("interoperability", {}).get("integrates_with_lpis", ""),
+        "integrates_with_lab_data": fs.get("interoperability", {}).get("integrates_with_lab_data", ""),
+        "integrates_with_eo_pipeline": fs.get("interoperability", {}).get("integrates_with_eo_pipeline", ""),
+        "machine_readable_io_schema": fs.get("interoperability", {}).get("machine_readable_io_schema", ""),
         "schema_version": meta.get("schema_version", ""),
         "last_updated": meta.get("last_updated", ""),
     }

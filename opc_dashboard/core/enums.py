@@ -26,6 +26,13 @@ _re = _f["runtime_environment"]["properties"]
 EXECUTION_TARGET_OPTIONS: list[str] = _re["execution_targets"]["items"]["enum"]
 CONTAINER_TECH_OPTIONS: list[str] = _re["container_tech"]["items"]["enum"]
 
+_ap = _f["automation_profile"]["properties"]
+AUTOMATION_LEVEL_OPTIONS: list[str] = _ap["data_ingestion"]["enum"]
+
+_io = _f["interoperability"]["properties"]
+INPUT_INTERFACE_OPTIONS: list[str] = _io["input_interfaces"]["items"]["enum"]
+OUTPUT_FORMAT_OPTIONS: list[str] = _io["output_formats"]["items"]["enum"]
+
 CRCF_STATUS_OPTIONS: list[str] = _c["status"]["enum"]
 CRCF_PRIORITY_OPTIONS: list[str] = _c["priority_for_improvement"]["enum"]
 
