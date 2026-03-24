@@ -340,6 +340,31 @@
             "integrates_with_eo_pipeline": { "type": "boolean" },
             "machine_readable_io_schema": { "type": "boolean" }
           }
+        },
+        "input_dependency_profile": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "requires_field_management_data": { "type": "boolean" },
+            "requires_soil_sampling": { "type": "boolean" },
+            "requires_lab_analysis": { "type": "boolean" },
+            "requires_optical_eo": { "type": "boolean" },
+            "requires_sar_eo": { "type": "boolean" },
+            "requires_weather_data": { "type": "boolean" },
+            "most_critical_bottleneck": {
+              "type": "string",
+              "enum": [
+                "management_data",
+                "soil_data",
+                "eo_availability",
+                "weather_data",
+                "crop_parameters",
+                "validation_data",
+                "compute",
+                "other"
+              ]
+            }
+          }
         }
       }
     },

@@ -80,6 +80,27 @@ def flatten_factsheet(record: dict) -> dict:
         "machine_readable_io_schema": fs.get("interoperability", {}).get(
             "machine_readable_io_schema", ""
         ),
+        "requires_field_management_data": fs.get("input_dependency_profile", {}).get(
+            "requires_field_management_data", ""
+        ),
+        "requires_soil_sampling": fs.get("input_dependency_profile", {}).get(
+            "requires_soil_sampling", ""
+        ),
+        "requires_lab_analysis": fs.get("input_dependency_profile", {}).get(
+            "requires_lab_analysis", ""
+        ),
+        "requires_optical_eo": fs.get("input_dependency_profile", {}).get(
+            "requires_optical_eo", ""
+        ),
+        "requires_sar_eo": fs.get("input_dependency_profile", {}).get(
+            "requires_sar_eo", ""
+        ),
+        "requires_weather_data": fs.get("input_dependency_profile", {}).get(
+            "requires_weather_data", ""
+        ),
+        "most_critical_bottleneck": fs.get("input_dependency_profile", {}).get(
+            "most_critical_bottleneck", ""
+        ),
         "schema_version": meta.get("schema_version", ""),
         "last_updated": meta.get("last_updated", ""),
     }

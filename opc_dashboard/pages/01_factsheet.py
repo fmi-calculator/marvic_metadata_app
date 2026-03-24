@@ -24,6 +24,7 @@ from core.enums import (
     AUTOMATION_LEVEL_OPTIONS,
     INPUT_INTERFACE_OPTIONS,
     OUTPUT_FORMAT_OPTIONS,
+    BOTTLENECK_OPTIONS,
 )
 
 _s.ensure_session_state()
@@ -307,6 +308,57 @@ with st.form("factsheet_form"):
             help="Inputs and outputs are described by a formal, machine-readable schema (e.g. JSON Schema, OpenAPI).",
         )
 
+    st.subheader("Input dependency profile")
+    st.caption(
+        "Flag which input data types this OPC actually requires to run, "
+        "then identify the single most critical bottleneck that limits operational deployment."
+    )
+    idp = fs.get("input_dependency_profile", {})
+
+    col_d1, col_d2 = st.columns(2)
+    with col_d1:
+        req_field_mgmt = st.checkbox(
+            "Field management data",
+            value=idp.get("requires_field_management_data", False),
+            help="Tillage, fertilisation, irrigation, sowing/harvest dates, etc.",
+        )
+        req_soil_sampling = st.checkbox(
+            "Soil sampling",
+            value=idp.get("requires_soil_sampling", False),
+            help="On-site soil physical / chemical measurements (bulk density, texture, SOC, …).",
+        )
+        req_lab_analysis = st.checkbox(
+            "Lab analysis",
+            value=idp.get("requires_lab_analysis", False),
+            help="Laboratory analysis of soil or plant material (e.g. mineralisation assays).",
+        )
+    with col_d2:
+        req_optical_eo = st.checkbox(
+            "Optical EO",
+            value=idp.get("requires_optical_eo", False),
+            help="Optical satellite or aerial imagery (e.g. Sentinel-2, Landsat).",
+        )
+        req_sar_eo = st.checkbox(
+            "SAR EO",
+            value=idp.get("requires_sar_eo", False),
+            help="Synthetic Aperture Radar imagery (e.g. Sentinel-1).",
+        )
+        req_weather = st.checkbox(
+            "Weather data",
+            value=idp.get("requires_weather_data", False),
+            help="Meteorological time series (precipitation, temperature, radiation, …).",
+        )
+
+    _BOTTLENECK_OPTS = [""] + BOTTLENECK_OPTIONS
+    most_critical_bottleneck = st.selectbox(
+        "Most critical operational bottleneck",
+        options=_BOTTLENECK_OPTS,
+        index=_BOTTLENECK_OPTS.index(idp.get("most_critical_bottleneck", ""))
+        if idp.get("most_critical_bottleneck", "") in _BOTTLENECK_OPTS
+        else 0,
+        help="Which single input or resource is the hardest constraint for running this OPC at scale?",
+    )
+
     submitted = st.form_submit_button("Save")
 
 # ── On save ───────────────────────────────────────────────────────────────────
@@ -353,6 +405,15 @@ if submitted:
                 "integrates_with_lab_data": int_lab,
                 "integrates_with_eo_pipeline": int_eo,
                 "machine_readable_io_schema": int_schema,
+            },
+            "input_dependency_profile": {
+                "requires_field_management_data": req_field_mgmt,
+                "requires_soil_sampling": req_soil_sampling,
+                "requires_lab_analysis": req_lab_analysis,
+                "requires_optical_eo": req_optical_eo,
+                "requires_sar_eo": req_sar_eo,
+                "requires_weather_data": req_weather,
+                "most_critical_bottleneck": most_critical_bottleneck,
             },
         }
     )

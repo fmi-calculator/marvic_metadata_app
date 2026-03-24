@@ -92,6 +92,15 @@ def new_opc_record(opc_id: str, created_by: str, notes: str = "") -> dict:
                 "integrates_with_eo_pipeline": False,
                 "machine_readable_io_schema": False,
             },
+            "input_dependency_profile": {
+                "requires_field_management_data": False,
+                "requires_soil_sampling": False,
+                "requires_lab_analysis": False,
+                "requires_optical_eo": False,
+                "requires_sar_eo": False,
+                "requires_weather_data": False,
+                "most_critical_bottleneck": "",
+            },
         },
         "models": [],
         "uncertainty_propagation": {

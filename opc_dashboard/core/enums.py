@@ -33,6 +33,9 @@ _io = _f["interoperability"]["properties"]
 INPUT_INTERFACE_OPTIONS: list[str] = _io["input_interfaces"]["items"]["enum"]
 OUTPUT_FORMAT_OPTIONS: list[str] = _io["output_formats"]["items"]["enum"]
 
+_idp = _f["input_dependency_profile"]["properties"]
+BOTTLENECK_OPTIONS: list[str] = _idp["most_critical_bottleneck"]["enum"]
+
 CRCF_STATUS_OPTIONS: list[str] = _c["status"]["enum"]
 CRCF_PRIORITY_OPTIONS: list[str] = _c["priority_for_improvement"]["enum"]
 
