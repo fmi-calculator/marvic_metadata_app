@@ -65,11 +65,21 @@ def flatten_factsheet(record: dict) -> dict:
         "output_formats": _join(
             fs.get("interoperability", {}).get("output_formats", [])
         ),
-        "integrates_with_fmis": fs.get("interoperability", {}).get("integrates_with_fmis", ""),
-        "integrates_with_lpis": fs.get("interoperability", {}).get("integrates_with_lpis", ""),
-        "integrates_with_lab_data": fs.get("interoperability", {}).get("integrates_with_lab_data", ""),
-        "integrates_with_eo_pipeline": fs.get("interoperability", {}).get("integrates_with_eo_pipeline", ""),
-        "machine_readable_io_schema": fs.get("interoperability", {}).get("machine_readable_io_schema", ""),
+        "integrates_with_fmis": fs.get("interoperability", {}).get(
+            "integrates_with_fmis", ""
+        ),
+        "integrates_with_lpis": fs.get("interoperability", {}).get(
+            "integrates_with_lpis", ""
+        ),
+        "integrates_with_lab_data": fs.get("interoperability", {}).get(
+            "integrates_with_lab_data", ""
+        ),
+        "integrates_with_eo_pipeline": fs.get("interoperability", {}).get(
+            "integrates_with_eo_pipeline", ""
+        ),
+        "machine_readable_io_schema": fs.get("interoperability", {}).get(
+            "machine_readable_io_schema", ""
+        ),
         "schema_version": meta.get("schema_version", ""),
         "last_updated": meta.get("last_updated", ""),
     }

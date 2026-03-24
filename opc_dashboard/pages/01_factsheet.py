@@ -263,13 +263,17 @@ with st.form("factsheet_form"):
     input_interfaces = st.multiselect(
         "Input interfaces (select all that apply)",
         options=INPUT_INTERFACE_OPTIONS,
-        default=[v for v in iop.get("input_interfaces", []) if v in INPUT_INTERFACE_OPTIONS],
+        default=[
+            v for v in iop.get("input_interfaces", []) if v in INPUT_INTERFACE_OPTIONS
+        ],
         help="How does the OPC receive its input data?",
     )
     output_formats = st.multiselect(
         "Output formats (select all that apply)",
         options=OUTPUT_FORMAT_OPTIONS,
-        default=[v for v in iop.get("output_formats", []) if v in OUTPUT_FORMAT_OPTIONS],
+        default=[
+            v for v in iop.get("output_formats", []) if v in OUTPUT_FORMAT_OPTIONS
+        ],
         help="In what formats does the OPC deliver its results?",
     )
 
@@ -335,20 +339,20 @@ if submitted:
                 "minimum_compute_notes": min_compute_notes.strip(),
             },
             "automation_profile": {
-                "data_ingestion":    auto_data_ingestion,
-                "preprocessing":     auto_preprocessing,
-                "model_execution":   auto_model_execution,
-                "qa_qc":             auto_qa_qc,
+                "data_ingestion": auto_data_ingestion,
+                "preprocessing": auto_preprocessing,
+                "model_execution": auto_model_execution,
+                "qa_qc": auto_qa_qc,
                 "report_generation": auto_report_generation,
             },
             "interoperability": {
-                "input_interfaces":            input_interfaces,
-                "output_formats":              output_formats,
-                "integrates_with_fmis":        int_fmis,
-                "integrates_with_lpis":        int_lpis,
-                "integrates_with_lab_data":    int_lab,
+                "input_interfaces": input_interfaces,
+                "output_formats": output_formats,
+                "integrates_with_fmis": int_fmis,
+                "integrates_with_lpis": int_lpis,
+                "integrates_with_lab_data": int_lab,
                 "integrates_with_eo_pipeline": int_eo,
-                "machine_readable_io_schema":  int_schema,
+                "machine_readable_io_schema": int_schema,
             },
         }
     )
