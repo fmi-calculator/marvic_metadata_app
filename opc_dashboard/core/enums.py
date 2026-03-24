@@ -12,6 +12,7 @@ _c = _schema["$defs"]["crcfCriterionDetail"]["properties"]
 
 MODELLING_APPROACH_OPTIONS: list[str] = _f["main_modelling_approach"]["enum"]
 GHG_OPTIONS: list[str] = _f["ghgs_covered"]["items"]["enum"]
+CROP_TYPE_OPTIONS: list[str] = _f["crop_types_supported"]["items"]["enum"]
 CF_PRACTICES_OPTIONS: list[str] = _f["cf_practices_covered"]["items"]["enum"]
 SCALE_OPTIONS: list[str] = _schema["$defs"]["scaleEnum"]["enum"]
 UPDATE_FREQUENCY_OPTIONS: list[str] = _f["update_frequency"]["enum"]
@@ -38,6 +39,17 @@ BOTTLENECK_OPTIONS: list[str] = _idp["most_critical_bottleneck"]["enum"]
 
 CRCF_STATUS_OPTIONS: list[str] = _c["status"]["enum"]
 CRCF_PRIORITY_OPTIONS: list[str] = _c["priority_for_improvement"]["enum"]
+
+_crcf = _schema["properties"]["crcf_model_readiness_matrix"]["properties"][
+    "verification_profile"
+]["properties"]
+PRACTICE_EVIDENCE_OPTIONS: list[str] = _crcf["practice_verification_evidence"]["items"][
+    "enum"
+]
+OUTCOME_EVIDENCE_OPTIONS: list[str] = _crcf["outcome_verification_evidence"]["items"][
+    "enum"
+]
+FIELD_VISITS_OPTIONS: list[str] = _crcf["field_visits_required"]["enum"]
 
 UNCERTAINTY_SOURCES: list[str] = [
     "initial_conditions",

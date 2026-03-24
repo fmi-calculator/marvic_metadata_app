@@ -34,6 +34,11 @@ def default_crcf() -> dict:
                 "r2": False,
             },
         },
+        "verification_profile": {
+            "practice_verification_evidence": [],
+            "outcome_verification_evidence": [],
+            "field_visits_required": "",
+        },
     }
 
 
@@ -61,6 +66,7 @@ def new_opc_record(opc_id: str, created_by: str, notes: str = "") -> dict:
             "target_lusts": [],
             "geographic_focus": [],
             "ghgs_covered": [],
+            "crop_types_supported": [],
             "cf_practices_covered": [],
             "reporting_scale": [],
             "update_frequency": "",

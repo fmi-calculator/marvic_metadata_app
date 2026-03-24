@@ -12,6 +12,7 @@ from core import storage
 from core.enums import (
     MODELLING_APPROACH_OPTIONS,
     GHG_OPTIONS,
+    CROP_TYPE_OPTIONS,
     CF_PRACTICES_OPTIONS,
     SCALE_OPTIONS,
     UPDATE_FREQUENCY_OPTIONS,
@@ -90,6 +91,15 @@ with st.form("factsheet_form"):
         "GHGs covered (select all that apply)",
         options=GHG_OPTIONS,
         default=[g for g in fs.get("ghgs_covered", []) if g in GHG_OPTIONS],
+    )
+
+    crop_types = st.multiselect(
+        "Crop types supported (select all that apply)",
+        options=CROP_TYPE_OPTIONS,
+        default=[
+            c for c in fs.get("crop_types_supported", []) if c in CROP_TYPE_OPTIONS
+        ],
+        help="Which crop or land-use types can this OPC simulate or be applied to?",
     )
 
     cf_practices = st.multiselect(
@@ -375,6 +385,7 @@ if submitted:
             "target_lusts": [l.strip() for l in target_raw.splitlines() if l.strip()],
             "geographic_focus": [l.strip() for l in geo_raw.splitlines() if l.strip()],
             "ghgs_covered": ghgs,
+            "crop_types_supported": crop_types,
             "cf_practices_covered": cf_practices,
             "reporting_scale": scales,
             "update_frequency": update_freq,

@@ -3,7 +3,7 @@
     "schema_version": "1.0.0",
     "opc_id": "aceo_just_a_test",
     "created_by": "Istem Fer",
-    "last_updated": "2026-03-18",
+    "last_updated": "2026-03-24",
     "notes": ""
   },
   "factsheet": {
@@ -44,7 +44,48 @@
       "Cover crops",
       "Residue management",
       "Organic amendments"
-    ]
+    ],
+    "crop_types_supported": [
+      "cereals",
+      "maize"
+    ],
+    "runtime_environment": {
+      "execution_targets": [
+        "hpc",
+        "server"
+      ],
+      "containerised": false,
+      "container_tech": [
+        "none"
+      ],
+      "requires_parallelisation": true,
+      "minimum_compute_notes": ""
+    },
+    "automation_profile": {
+      "data_ingestion": "",
+      "preprocessing": "",
+      "model_execution": "",
+      "qa_qc": "",
+      "report_generation": ""
+    },
+    "interoperability": {
+      "input_interfaces": [],
+      "output_formats": [],
+      "integrates_with_fmis": false,
+      "integrates_with_lpis": false,
+      "integrates_with_lab_data": false,
+      "integrates_with_eo_pipeline": false,
+      "machine_readable_io_schema": false
+    },
+    "input_dependency_profile": {
+      "requires_field_management_data": false,
+      "requires_soil_sampling": false,
+      "requires_lab_analysis": false,
+      "requires_optical_eo": false,
+      "requires_sar_eo": false,
+      "requires_weather_data": false,
+      "most_critical_bottleneck": ""
+    }
   },
   "models": [
     {
@@ -149,6 +190,16 @@
         "pi": false,
         "r2": false
       }
+    },
+    "verification_profile": {
+      "practice_verification_evidence": [
+        "eo"
+      ],
+      "outcome_verification_evidence": [
+        "soil_sampling",
+        "flux_towers"
+      ],
+      "field_visits_required": "sometimes"
     }
   }
 }

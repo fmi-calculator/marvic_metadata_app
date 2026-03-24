@@ -165,6 +165,27 @@
             "enum": ["SOC", "CO2", "N2O", "CH4", "RECO", "GPP", "NECB", "other"]
           }
         },
+        "crop_types_supported": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "cereals",
+              "maize",
+              "oilseeds",
+              "pulses",
+              "legumes",
+              "grassland",
+              "root vegetables",
+              "vegetables",
+              "shrubs",
+              "trees",
+              "mixed",
+              "other"
+            ]
+          }
+        },
         "cf_practices_covered": {
           "type": "array",
           "uniqueItems": true,
@@ -505,6 +526,49 @@
             "scientific_credibility": { "$ref": "#/$defs/crcfCriterionDetail" },
             "suitability": { "$ref": "#/$defs/crcfCriterionDetail" },
             "minimum_accuracy": { "$ref": "#/$defs/crcfCriterionDetail" }
+          }
+        },
+        "verification_profile": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "practice_verification_evidence": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "fmis",
+                  "eo",
+                  "machine_logs",
+                  "photos",
+                  "invoices",
+                  "lab_data",
+                  "field_visits",
+                  "other"
+                ]
+              }
+            },
+            "outcome_verification_evidence": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "soil_sampling",
+                  "flux_towers",
+                  "yield_data",
+                  "eo",
+                  "benchmark_sites",
+                  "independent_datasets",
+                  "other"
+                ]
+              }
+            },
+            "field_visits_required": {
+              "type": "string",
+              "enum": ["never", "sometimes", "always", "unclear"]
+            }
           }
         }
       }

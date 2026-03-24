@@ -27,6 +27,7 @@ def flatten_factsheet(record: dict) -> dict:
         "target_lusts": _join(fs.get("target_lusts", [])),
         "geographic_focus": _join(fs.get("geographic_focus", [])),
         "ghgs_covered": _join(fs.get("ghgs_covered", [])),
+        "crop_types_supported": _join(fs.get("crop_types_supported", [])),
         "cf_practices_covered": _join(fs.get("cf_practices_covered", [])),
         "reporting_scale": _join(fs.get("reporting_scale", [])),
         "update_frequency": fs.get("update_frequency", ""),
@@ -216,6 +217,19 @@ def flatten_crcf_matrix(record: dict) -> list[dict]:
             "min_accuracy_r2_gt_0": cr.get("r2", "")
             if code == "minimum_accuracy"
             else "",
+            "practice_verification_evidence": _join(
+                crcf.get("verification_profile", {}).get(
+                    "practice_verification_evidence", []
+                )
+            ),
+            "outcome_verification_evidence": _join(
+                crcf.get("verification_profile", {}).get(
+                    "outcome_verification_evidence", []
+                )
+            ),
+            "field_visits_required": crcf.get("verification_profile", {}).get(
+                "field_visits_required", ""
+            ),
         }
         rows.append(row)
     return rows

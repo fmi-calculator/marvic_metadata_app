@@ -1,13 +1,21 @@
 """Page 5 — CRCF Model Readiness Matrix (opc_crcf_model_readiness_matrix.csv)."""
+
 import sys
 import pathlib
+
 sys.path.insert(0, str(pathlib.Path(__file__).parent.parent))
 
 import streamlit as st
 
 from core import state as _s
 from core import storage
-from core.enums import CRCF_STATUS_OPTIONS, CRCF_PRIORITY_OPTIONS
+from core.enums import (
+    CRCF_STATUS_OPTIONS,
+    CRCF_PRIORITY_OPTIONS,
+    PRACTICE_EVIDENCE_OPTIONS,
+    OUTCOME_EVIDENCE_OPTIONS,
+    FIELD_VISITS_OPTIONS,
+)
 
 _s.ensure_session_state()
 st.title("CRCF Readiness")
@@ -24,29 +32,35 @@ saved = rec.get("crcf_model_readiness_matrix", {})
 if not isinstance(saved, dict):
     saved = {}
 
-ep  = saved.get("eligibility_pathway", {})
+ep = saved.get("eligibility_pathway", {})
 mcc = saved.get("model_compliance_criteria", {})
 
 _CRITERIA = [
     ("transparency_traceability", "Transparency and traceability"),
-    ("scientific_credibility",    "Scientific credibility"),
-    ("suitability",               "Suitability"),
-    ("minimum_accuracy",          "Minimum accuracy"),
+    ("scientific_credibility", "Scientific credibility"),
+    ("suitability", "Suitability"),
+    ("minimum_accuracy", "Minimum accuracy"),
 ]
 
+
 def _saved_criterion(code: str) -> dict:
-    return mcc.get(code, {
-        "status":                   "unclear",
-        "short_justification":      "",
-        "priority_for_improvement": "medium",
-        "evidence_notes":           "",
-    })
+    return mcc.get(
+        code,
+        {
+            "status": "unclear",
+            "short_justification": "",
+            "priority_for_improvement": "medium",
+            "evidence_notes": "",
+        },
+    )
+
 
 def _safe_index(opts: list, val, default: int = 0) -> int:
     try:
         return opts.index(val)
     except ValueError:
         return default
+
 
 model_name_opts = [""] + [
     m.get("model_name", "") for m in rec.get("models", []) if m.get("model_name")
@@ -119,7 +133,9 @@ for code, label in _CRITERIA:
         priority = st.selectbox(
             "Priority for improvement",
             options=CRCF_PRIORITY_OPTIONS,
-            index=_safe_index(CRCF_PRIORITY_OPTIONS, r.get("priority_for_improvement", "medium")),
+            index=_safe_index(
+                CRCF_PRIORITY_OPTIONS, r.get("priority_for_improvement", "medium")
+            ),
             key=f"crcf_priority_{code}",
             disabled=disabled,
         )
@@ -167,27 +183,70 @@ for code, label in _CRITERIA:
             )
 
     criteria_values[code] = {
-        "status":                   status,
-        "short_justification":      short_justification.strip(),
+        "status": status,
+        "short_justification": short_justification.strip(),
         "priority_for_improvement": priority,
-        "evidence_notes":           evidence_notes.strip(),
-        "bias":                     bias_val,
-        "pi":                       pi_val,
-        "r2":                       r2_val,
+        "evidence_notes": evidence_notes.strip(),
+        "bias": bias_val,
+        "pi": pi_val,
+        "r2": r2_val,
     }
 
     st.divider()
 
+# ── Verification profile ──────────────────────────────────────────────────────
+st.subheader("Verification profile")
+st.caption(
+    "Describe what evidence types can support practice and outcome verification, "
+    "and whether field visits are required as part of the verification process."
+)
+vp = saved.get("verification_profile", {})
+
+practice_evidence = st.multiselect(
+    "Practice verification evidence (select all that apply)",
+    options=PRACTICE_EVIDENCE_OPTIONS,
+    default=[
+        v
+        for v in vp.get("practice_verification_evidence", [])
+        if v in PRACTICE_EVIDENCE_OPTIONS
+    ],
+    help="Evidence types that can verify that the claimed management practices actually took place.",
+)
+outcome_evidence = st.multiselect(
+    "Outcome verification evidence (select all that apply)",
+    options=OUTCOME_EVIDENCE_OPTIONS,
+    default=[
+        v
+        for v in vp.get("outcome_verification_evidence", [])
+        if v in OUTCOME_EVIDENCE_OPTIONS
+    ],
+    help="Evidence types that can verify the modelled carbon / GHG outcome.",
+)
+
+_FV_OPTS = [""] + FIELD_VISITS_OPTIONS
+_fv_saved = vp.get("field_visits_required", "")
+field_visits_required = st.selectbox(
+    "Field visits required?",
+    options=_FV_OPTS,
+    index=_FV_OPTS.index(_fv_saved) if _fv_saved in _FV_OPTS else 0,
+    help="How often are physical field visits required to complete verification?",
+)
+
 # ── Save ──────────────────────────────────────────────────────────────────────
 if st.button("Save", use_container_width=True):
     new_crcf = {
-        "assessment_unit":       assessment_unit,
+        "assessment_unit": assessment_unit,
         "applies_to_model_name": applies_to_model_name,
         "eligibility_pathway": {
-            "national_inventory_model":   ni_model,
+            "national_inventory_model": ni_model,
             "commission_compliant_model": cc_model,
         },
         "model_compliance_criteria": criteria_values,
+        "verification_profile": {
+            "practice_verification_evidence": practice_evidence,
+            "outcome_verification_evidence": outcome_evidence,
+            "field_visits_required": field_visits_required,
+        },
     }
     rec["crcf_model_readiness_matrix"] = new_crcf
     _s.set_record(rec)
