@@ -3,7 +3,7 @@
     "schema_version": "1.0.0",
     "opc_id": "fi_test_test_test",
     "created_by": "Istem Fer",
-    "last_updated": "2026-03-18",
+    "last_updated": "2026-03-24",
     "notes": ""
   },
   "factsheet": {
@@ -14,17 +14,77 @@
       "University of Helsinki"
     ],
     "main_modelling_approach": "hybrid",
-    "target_lusts": ["Arable", "Grassland"],
-    "geographic_focus": ["Finland", "Europe", "Global"],
-    "ghgs_covered": ["SOC"],
-    "cf_practices_covered": ["Crop rotation", "Cover crops"],
-    "reporting_scale": ["farm", "project"],
+    "target_lusts": [
+      "Arable",
+      "Grassland"
+    ],
+    "geographic_focus": [
+      "Finland",
+      "Europe",
+      "Global"
+    ],
+    "ghgs_covered": [
+      "SOC"
+    ],
+    "cf_practices_covered": [
+      "Crop rotation",
+      "Cover crops"
+    ],
+    "reporting_scale": [
+      "farm",
+      "project"
+    ],
     "update_frequency": "subannual",
-    "user_orientation": ["certification", "farmer", "research"],
+    "user_orientation": [
+      "certification",
+      "farmer",
+      "research"
+    ],
     "operational_maturity": "04_operational",
     "openness_level": "partly_open",
     "validation_status": "under_validation",
-    "validation_status_notes": "No notes."
+    "validation_status_notes": "No notes.",
+    "crop_types_supported": [
+      "cereals",
+      "grassland"
+    ],
+    "baseline_approach": {
+      "baseline_type": "activity_specific",
+      "baseline_history_required": false,
+      "baseline_auditability": ""
+    },
+    "input_dependency_profile": {
+      "requires_field_management_data": true,
+      "requires_soil_sampling": false,
+      "requires_lab_analysis": false,
+      "requires_optical_eo": true,
+      "requires_sar_eo": false,
+      "requires_weather_data": true,
+      "most_critical_bottleneck": ""
+    },
+    "interoperability": {
+      "input_interfaces": [],
+      "output_formats": [],
+      "integrates_with_fmis": false,
+      "integrates_with_lpis": false,
+      "integrates_with_lab_data": false,
+      "integrates_with_eo_pipeline": false,
+      "machine_readable_io_schema": false
+    },
+    "runtime_environment": {
+      "execution_targets": [],
+      "containerised": false,
+      "container_tech": [],
+      "requires_parallelisation": false,
+      "minimum_compute_notes": ""
+    },
+    "automation_profile": {
+      "data_ingestion": "automated",
+      "preprocessing": "automated",
+      "model_execution": "automated",
+      "qa_qc": "automated",
+      "report_generation": ""
+    }
   },
   "models": [
     {
@@ -69,7 +129,10 @@
       "dataset_type": "national statistics",
       "geography": "Finland",
       "period": "post-2018",
-      "validation_metrics": ["RMSE", "bias"],
+      "validation_metrics": [
+        "RMSE",
+        "bias"
+      ],
       "summary_result": "",
       "remaining_gap": ""
     }
@@ -86,19 +149,28 @@
         "status": "unclear",
         "short_justification": "",
         "priority_for_improvement": "medium",
-        "evidence_notes": ""
+        "evidence_notes": "",
+        "bias": false,
+        "pi": false,
+        "r2": false
       },
       "scientific_credibility": {
         "status": "unclear",
         "short_justification": "",
         "priority_for_improvement": "medium",
-        "evidence_notes": ""
+        "evidence_notes": "",
+        "bias": false,
+        "pi": false,
+        "r2": false
       },
       "suitability": {
         "status": "unclear",
         "short_justification": "",
         "priority_for_improvement": "medium",
-        "evidence_notes": ""
+        "evidence_notes": "",
+        "bias": false,
+        "pi": false,
+        "r2": false
       },
       "minimum_accuracy": {
         "status": "unclear",
@@ -109,6 +181,19 @@
         "pi": false,
         "r2": false
       }
+    },
+    "verification_profile": {
+      "practice_verification_evidence": [
+        "eo",
+        "field_visits",
+        "lab_data"
+      ],
+      "outcome_verification_evidence": [
+        "eo",
+        "soil_sampling",
+        "yield_data"
+      ],
+      "field_visits_required": "sometimes"
     }
   }
 }
