@@ -35,6 +35,19 @@ def flatten_factsheet(record: dict) -> dict:
         "openness_level": fs.get("openness_level", ""),
         "validation_status": fs.get("validation_status", ""),
         "validation_status_notes": fs.get("validation_status_notes", ""),
+        "execution_targets": _join(
+            fs.get("runtime_environment", {}).get("execution_targets", [])
+        ),
+        "containerised": fs.get("runtime_environment", {}).get("containerised", ""),
+        "container_tech": _join(
+            fs.get("runtime_environment", {}).get("container_tech", [])
+        ),
+        "requires_parallelisation": fs.get("runtime_environment", {}).get(
+            "requires_parallelisation", ""
+        ),
+        "minimum_compute_notes": fs.get("runtime_environment", {}).get(
+            "minimum_compute_notes", ""
+        ),
         "schema_version": meta.get("schema_version", ""),
         "last_updated": meta.get("last_updated", ""),
     }

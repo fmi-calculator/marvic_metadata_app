@@ -248,6 +248,31 @@
         },
         "validation_status_notes": {
           "type": "string"
+        },
+        "runtime_environment": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "execution_targets": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": ["laptop", "workstation", "server", "cloud", "hpc"]
+              }
+            },
+            "containerised": { "type": "boolean" },
+            "container_tech": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": ["docker", "podman", "singularity", "none", "other"]
+              }
+            },
+            "requires_parallelisation": { "type": "boolean" },
+            "minimum_compute_notes": { "type": "string" }
+          }
         }
       }
     },

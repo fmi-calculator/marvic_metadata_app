@@ -69,6 +69,13 @@ def new_opc_record(opc_id: str, created_by: str, notes: str = "") -> dict:
             "openness_level": "",
             "validation_status": "",
             "validation_status_notes": "",
+            "runtime_environment": {
+                "execution_targets": [],
+                "containerised": False,
+                "container_tech": [],
+                "requires_parallelisation": False,
+                "minimum_compute_notes": "",
+            },
         },
         "models": [],
         "uncertainty_propagation": {

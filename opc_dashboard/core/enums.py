@@ -2,6 +2,7 @@
 
 All lists are read once at import time so they stay in sync with the schema.
 """
+
 from core.schema import load_schema
 
 _schema = load_schema()
@@ -20,6 +21,10 @@ OPENNESS_LEVEL_OPTIONS: list[str] = _f["openness_level"]["enum"]
 VALIDATION_STATUS_OPTIONS: list[str] = _f["validation_status"]["enum"]
 
 MODEL_ROLE_OPTIONS: list[str] = _m["model_role"]["enum"]
+
+_re = _f["runtime_environment"]["properties"]
+EXECUTION_TARGET_OPTIONS: list[str] = _re["execution_targets"]["items"]["enum"]
+CONTAINER_TECH_OPTIONS: list[str] = _re["container_tech"]["items"]["enum"]
 
 CRCF_STATUS_OPTIONS: list[str] = _c["status"]["enum"]
 CRCF_PRIORITY_OPTIONS: list[str] = _c["priority_for_improvement"]["enum"]
